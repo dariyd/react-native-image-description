@@ -1,0 +1,73 @@
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.4.2"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 34)
+
+  namespace "com.imagedescription"
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 26)
+    targetSdkVersion safeExtGet('targetSdkVersion', 34)
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+
+  kotlinOptions {
+    jvmTarget = "11"
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
+  
+  // React Native
+  implementation "com.facebook.react:react-native:+"
+  
+  // ML Kit dependencies
+  implementation "com.google.mlkit:image-labeling:17.0.8"
+  implementation "com.google.mlkit:genai-image-description:1.0.0-beta1"
+  
+  // Coroutines for async operations
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3"
+}
+
