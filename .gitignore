@@ -49,6 +49,17 @@ lib/
 example/node_modules/
 example/.expo/
 example/.expo-shared/
+example/android/.gradle/
+example/android/.cxx/
+example/android/.externalNativeBuild/
+example/android/build/
+example/android/app/.cxx/
+example/android/app/.externalNativeBuild/
+example/android/app/build/
+example/android/local.properties
+example/ios/Pods/
+example/ios/build/
+example/ios/DerivedData/
 
 # Misc
 .vscode/
