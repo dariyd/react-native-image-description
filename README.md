@@ -5,15 +5,17 @@
 
 React Native module for image classification and description using native ML capabilities:
 - **iOS**: Vision framework's `VNClassifyImageRequest` for image classification
+  - Optional: merge results with Google ML Kit Image Labeling (400+ labels)
 - **Android**: ML Kit Image Labeling + GenAI Image Description API
 
 ## Features
 
 ✨ **Image Classification**
-- Get labels with confidence scores for any image
-- Configurable precision/recall thresholds (iOS)
-- Filter by confidence threshold (Android)
-- High-performance on-device processing
+- iOS and Android support
+- iOS: Apple Vision + optional Google ML Kit merge (recommended ON for better results)
+- Android: ML Kit Image Labeling base model (400+ labels)
+- Configurable thresholds and result limits
+- On-device, fast inference
 
 ✨ **Image Description** (Android Only)
 - Natural language descriptions of images
@@ -78,7 +80,38 @@ if (result.success) {
 // mammal: 87.1%
 ```
 
+### iOS: Vision-only vs Vision + ML Kit
+
+By default on iOS, the module merges labels from Apple Vision and Google ML Kit
+Image Labeling to improve coverage. You can toggle ML Kit with `iosUseMlKit`:
+
+```typescript
+// Vision-only (disable ML Kit on iOS)
+const resVisionOnly = await classifyImage(uri, {
+  minimumConfidence: 0.5,
+  iosUseMlKit: false,
+});
+
+// Vision + ML Kit (default)
+const resMerged = await classifyImage(uri, {
+  minimumConfidence: 0.5,
+  iosUseMlKit: true,
+});
+```
+
+Runtime logs clearly indicate the source:
+- Vision labels are logged as `Vision label: …`
+- ML Kit labels are logged as `ML Kit label: …`
+- Final summary shows `Vision` vs `Vision and ML Kit`.
+
+### Demos
+
+| iOS (Vision + ML Kit) | Android (ML Kit) |
+| --- | --- |
+| <img src="assets/ios_labeling.gif" width="320" /> | <img src="assets/android_labeling.gif" width="320" /> |
+
 ### Image Description (Android Only)
+Note: iOS support in iOS 26 is on the TODO list.
 
 ```typescript
 import {
@@ -136,6 +169,8 @@ Classify an image and return labels with confidence scores.
   - `minimumConfidence` (number): 0.0-1.0, filter results by confidence
   - `confidenceThreshold` (number): 0.0-1.0 (Android only, default 0.5)
   - `maxResults` (number): Limit number of results
+  - `iosUseMlKit` (boolean): iOS only. Merge Google ML Kit labels with Vision
+    results. Defaults to `true`.
 
 **Returns:** `Promise<ClassificationResult>`
 ```typescript
@@ -223,12 +258,12 @@ Check if the module is available on the current platform.
 - ✅ Configurable confidence threshold
 - ✅ No model download required
 
-**Description:**
-- ✅ Natural language descriptions via GenAI Image Description API
-- ✅ On-device processing (privacy-friendly)
-- ⚠️ Requires one-time model download (~50MB)
-- ✅ Download progress tracking
-- ⚠️ Beta API (subject to changes)
+**Description (GenAI Image Description):**
+- ✅ On-device GenAI descriptions via ML Kit GenAI Image Description API
+- ⚠️ Only available on a limited set of supported devices (AICore/Gemini Nano required). See device support list: https://developers.google.com/ml-kit/genai#feature-device
+- ⚠️ May initially report `downloadable`/`downloading` and require time on Wi‑Fi to become available
+- ⚠️ API is in Beta and subject to change
+- ⚠️ This feature has not been fully validated by this library across the device matrix; treat as experimental
 
 ## Classification Options Explained
 
@@ -314,6 +349,11 @@ cd example && yarn android
 - Call `downloadDescriptionModel()` before using `describeImage()`
 - Ensure device has internet connection for initial download
 - Check available storage space (~50MB required)
+
+**GenAI Image Description returns `not_available`**
+- Feature requires a supported device with AICore/Gemini Nano. Verify the device is listed here: https://developers.google.com/ml-kit/genai#feature-device
+- Ensure Google Play services/AICore are up to date; give the device time to finish initialization on Wi‑Fi, then reboot
+- Not supported on emulators or devices with unlocked bootloader
 
 **Out of memory errors**
 - Reduce image resolution before processing

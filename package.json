@@ -1,6 +1,6 @@
 {
   "name": "@dariyd/react-native-image-description",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "React Native module for image classification and description using Vision framework (iOS) and ML Kit (Android)",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

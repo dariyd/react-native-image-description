@@ -17,6 +17,9 @@ export interface ClassificationOptions {
   maxResults?: number; // Limit number of results
   confidenceThreshold?: number; // Android ML Kit labeling (0.0-1.0)
   useCustomModel?: boolean; // For future custom models
+  // iOS-only: include Google ML Kit Image Labeling results alongside Vision
+  // Defaults to true when omitted
+  iosUseMlKit?: boolean;
 }
 
 export interface DescriptionResult {

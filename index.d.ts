@@ -21,6 +21,8 @@ export interface ClassificationOptions {
   maxResults?: number;
   confidenceThreshold?: number;
   useCustomModel?: boolean;
+  /** iOS only: merge Google ML Kit labels with Vision results (default: true) */
+  iosUseMlKit?: boolean;
 }
 
 export interface DescriptionResult {

@@ -16,6 +16,7 @@ def isNewArchitectureEnabled() {
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
 
 def safeExtGet(prop, fallback) {
   rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -42,13 +43,23 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
   }
 
   kotlinOptions {
-    jvmTarget = "11"
+    jvmTarget = "17"
   }
+}
+
+// Enable React Native Codegen for this library so CMake can include generated JNI sources
+react {
+  // Path to the example app's node_modules/react-native used by the plugin
+  reactNativeDir = rootProject.file("../node_modules/react-native")
+  // Where JS/TS sources (including the Spec) live relative to this build.gradle
+  jsRootDir = file("$rootDir/..")
+  // Java package for generated sources
+  codegenJavaPackageName = "com.imagedescription"
 }
 
 repositories {
@@ -63,7 +74,7 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   
   // ML Kit dependencies
-  implementation "com.google.mlkit:image-labeling:17.0.8"
+  implementation "com.google.mlkit:image-labeling:17.0.9"
   implementation "com.google.mlkit:genai-image-description:1.0.0-beta1"
   
   // Coroutines for async operations
