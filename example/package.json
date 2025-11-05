@@ -10,10 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "@dariyd/react-native-image-description": "file:..",
-    "react-native-image-picker": "^7.1.2",
+    "@dariyd/react-native-image-description": "^1.0.4",
     "react": "19.1.1",
     "react-native": "0.82.1",
+    "react-native-image-picker": "^7.1.2",
     "react-native-safe-area-context": "^5.5.2"
   },
   "devDependencies": {
