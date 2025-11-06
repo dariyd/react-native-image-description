@@ -110,7 +110,7 @@ Runtime logs clearly indicate the source:
 
 | iOS (Vision + ML Kit) | Android (ML Kit) |
 | --- | --- |
-| <img src="assets/ios_labeling.gif" width="320" /> | <img src="assets/android_labeling.gif" width="320" /> |
+| <img src="assets/ios_demo.gif" width="320" /> | <img src="assets/android_demo.gif" width="320" /> |
 
 ### Image Description (Android Only)
 Note: iOS support in iOS 26 is on the TODO list.
