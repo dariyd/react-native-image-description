@@ -1,6 +1,6 @@
 # @dariyd/react-native-image-description
 
-[![npm version](https://badge.fury.io/js/%40dariyd%2Freact-native-image-description.svg)](https://www.npmjs.com/package/@dariyd/react-native-image-description)
+[![npm version](https://img.shields.io/npm/v/react-native-fast-cache.svg?cacheSeconds=3600)](https://www.npmjs.com/package/@dariyd/react-native-image-description)
 [![npm downloads](https://img.shields.io/npm/dm/@dariyd/react-native-image-description.svg)](https://www.npmjs.com/package/@dariyd/react-native-image-description)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-blue.svg)](https://www.npmjs.com/package/@dariyd/react-native-image-description)
